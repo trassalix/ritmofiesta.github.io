@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Banda Ritmofiesta</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Ritmofiesta, banda de Vanosc - Groupe musical d'animation de 20 à 30 musiciens amateurs. Animations pour corsos, carnavals, fêtes de village, férias, mariages en Ardèche.">
+    <meta name="keywords" content="banda, vanosc, ritmofiesta, harmonie ste cécile, musique, animation, fête, carnaval, mariage, ardèche">
+    <meta name="author" content="Ritmofiesta">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ritmofiesta - Banda de Vanosc">
+    <meta property="og:description" content="Groupe musical d'animation pour vos événements festifs">
+    <meta property="og:image" content="images/image_154.jpg">
+    <meta property="og:url" content="https://www.ritmofiesta.fr">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.nav-group');
+            let activeDropdown = null;
+
+            // Handle dropdown toggle
+            function toggleDropdown(dropdown) {
+                if (activeDropdown && activeDropdown !== dropdown) {
+                    activeDropdown.classList.remove('active');
+                }
+
+                const isActive = dropdown.classList.contains('active');
+                dropdown.classList.toggle('active');
+                activeDropdown = isActive ? null : dropdown;
+            }
+
+            // Add click handlers
+            document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleDropdown(trigger.parentElement);
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-group')) {
+                    dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+                    activeDropdown = null;
+                }
+            });
+
+            // Keep dropdown open when clicking inside
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                content.addEventListener('click', (e) => e.stopPropagation());
+            });
+
+            // Scroll reveal
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
+</head>
+
+<body>
+    <div class="music-notes">
+        <span class="music-note" style="top: 80%; left: 5%;">♪</span>
+        <span class="music-note" style="top: 80%; right: 10%;">♫</span>
+        <span class="music-note" style="top: 80%; left: 15%;">♩</span>
+        <span class="music-note" style="top: 80%; right: 5%;">♬</span>
+    </div>
+    <section class="hero-section scroll-reveal">
+        <h1>Bienvenue chez <u>Ritmofiesta</u></h1>
+    </section>
+    <nav class="nav-container">
+        <div class="nav-menu">
+            <div class="nav-group">
+                <button class="dropdown-trigger">Principal</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Accueil</a>
+                    <a href="actualites_221.htm">Actualités</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">À Propos</button>
+                <div class="dropdown-content">
+                    <a href="presentation_178.htm">Présentation</a>
+                    <a href="les_musicos_182.html">Les Musicos</a>
+                    <a href="notre_repertoire_207.htm">Répertoire</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">Événements</button>
+                <div class="dropdown-content">
+                    <a href="agenda_204.htm">Agenda</a>
+                    <a href="galerie_photos_205.htm">Photos</a>
+                    <a href="nos_escapades_206.htm">Escapades</a>
+                    <a href="photos.html">Photos_test</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">Espace Membre</button>
+                <div class="dropdown-content">
+                    <a href="contact_176.htm">Contact</a>
+                    <a href="livre_d_or_486.htm">Ritmo d'or</a>
+                    <a href="espace_musicos_576.htm">Espace Musicos</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="site-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/image_154.jpg" alt="Logo" width="147" height="201"/>
+                </a>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <section class="band-presentation">
+                <div class="band-description2 yellow-text scroll-reveal">
+                    <h2>Présentation</h2>
+                    <p><strong>Mais ils sont d'où ?</strong></p>
+                    <p><strong>De Vanosc !</strong></p><br>
+                    <p><strong>Mais c'est où Vanosc ?</strong></p>
+                    <p><strong>Tu sais, tout en haut de l'Ardèche !</strong></p>
+                    <p><strong>Un petit village accroché sur sa montagne, la porte du midi !</strong></p><br>
+                    <p><strong>Ritmofiesta, c'est une bande de copains,</strong></p>
+                    <p><strong>une grande famille de musiciens,  qui proposent d’animer toutes vos fêtes, soirée, corso… auxquels vous voulez mettre l’ambiance.</strong></p><br>
+                    <p><strong>Reconnu pour être toujours joyeux,</strong></p>
+                    <p><strong>Ritmofiesta se déplace régulièrement partout en France  (Festival de Condom, Feria de Marboz, Corso de St Pierre de Chandieu…) mais aussi à l’étranger comme en Suisse.</strong></p><br>
+                    <p><strong>Ritmofiesta c’est aussi un répertoire varié pour s’adapter  à toutes vos animations, de Vino Griego à Goldman en passant par La Goffa Lolita ou Les yeux d’Emilie, nous n’attendons plus que vous pour s’amuser.</strong></p>
+            </section>
+            <section class="band-presentation">
+                <div class="image-container scroll-reveal">
+                    <img src="images/image_714.jpg" alt="Ritmofiesta band performing"/>
+                </div>
+            </section>
+            <section class="band-presentation">
+                <div class="band-description2 yellow-text scroll-reveal">
+                    <p><strong>Ritmofiesta est apprécié pour sa convivialité et sa bonne humeur, actuellement notre tenue se compose d'un tee-shirt, polo et sweat jaune ou noir (parka ou doudonne sans manche en hiver) reprenant notre logo et d'un pantalon noir. Nous sommes coiffés d'une casquette ou beret . Pour la période de noël, nous pouvons revêtir nos tenues de mère noel et père noel.</strong></p>
+            </section>
+            <section class="band-presentation">
+                <div class="image-container scroll-reveal">
+                    <img src="images/image_388.jpg" alt="Ritmofiesta band performing"/>
+                </div>
+            <section class="gallery-section">
+                <section class="band-presentation">
+                    <div class="image-container-pub scroll-reveal">
+                        <img src="images/image_181.jpg" alt="Ritmofiesta band performing"/>
+                    </div>
+        </main>
+    </div><!-- end of site-container -->
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: contact@ritmofiesta.fr</li>
+                    <li>Tél: +33 (0)4 XX XX XX XX</li>
+                    <li>Vanosc, Ardèche, France</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="presentation_178.htm">Qui sommes-nous</a></li>
+                    <li><a href="agenda_204.htm">Nos événements</a></li>
+                    <li><a href="galerie_photos_205.htm">Galerie photos</a></li>
+                    <li><a href="contact_176.htm">Nous contacter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <ul>
+                    <li><a href="https://www.facebook.com/people/Ritmofiesta-Vanosc/pfbid0SntroBf2VUspxjLsmDyDzWPdiievTLv8W1acNAU8BFFJkcJrXY5AAxWFWyt5194wl/">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="https://www.youtube.com/channel/UCDWqYRPr4nOeAseeAcKl_TQ">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ritmofiesta - Tous droits réservés</p>
+        </div>
+    </footer>
+</body>
+</html>

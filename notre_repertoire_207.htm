@@ -1,0 +1,2468 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" >-->
+<html dir="ltr" lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  https://www.youtube.com/watch?v=Ldl8uRy7Ft8&amp;t=23s
+  <title>
+   www.ritmofiesta.fr
+  </title>
+  <meta content="Banda de Vanosc" name="description"/>
+  <meta content="banda,vanosc,ritmofiesta,harmonie ste cécile," name="keywords"/>
+  <meta content="IziSpot 4.70 (www.izispot.com)" name="generator"/>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="IE=8,chrome=1" http-equiv="X-UA-Compatible">
+   <!--lesplugin-->
+   <script type="text/javascript">
+    snowingzone="1";
+snowmax="35";
+sinkspeed="0.6";
+snowmaxsize="22";
+snowminsize="8";
+   </script>
+   <style type="text/css">
+    BODY {scrollbar-face-color:#FFFF00;}
+BODY {scrollbar-shadow-color:#000000;}
+BODY {scrollbar-highlight-color:#FFFFFF;}
+BODY {scrollbar-3dlight-color:#000000;}
+BODY {scrollbar-darkshadow-color:#000000;}
+BODY {scrollbar-track-color:#FFFF00;}
+BODY {scrollbar-arrow-color:#0F0F0F;}
+   </style>
+   <script src="global_155.js" type="text/javascript">
+   </script>
+   <script src="language_156.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+    var dmWorkPath=""
+   </script>
+   <script src="dmenu_158.js" type="text/javascript">
+   </script>
+   <script src="dmenu_dyn_159.js" type="text/javascript">
+   </script>
+   <script src="dmenu_popup_160.js" type="text/javascript">
+   </script>
+   <script src="dmenu_add_161.js" type="text/javascript">
+   </script>
+   <!--JQuery-->
+   <script src="jquery-1.9.1.min_450.js" type="text/javascript">
+   </script>
+   <script src="jquery.easing.1.3_451.js" type="text/javascript">
+   </script>
+   <script src="jquery.bxslider_452.js" type="text/javascript">
+   </script>
+   <script src="jquery.colorbox-min_453.js" type="text/javascript">
+   </script>
+   <!-- bxSlider CSS file -->
+   <link href="jquery.bxslider_454.htm" rel="stylesheet" type="text/css"/>
+   <link href="jquery.colorbox_455.htm" rel="stylesheet" type="text/css"/>
+   <!--<link rel="stylesheet" type="text/css" href="normalize_456.htm" />-->
+   <script type="text/javascript">
+    // Set the colors for the snow. Add as many colors as you like
+var snowcolor=new Array("#AAAACC","#DDDDFF","#CCCCDD","#F3F3F3","#F0FFFF")
+
+// Set the fonts, that create the snowflakes. Add as many fonts as you like
+var snowtype=new Array("Arial Black","Arial Narrow","Times","Comic Sans MS")
+
+// Set the letter that creates your snowflake (recommended: * )
+var snowletter="*"
+
+var snowingzone = Number(snowingzone)
+var snowmax = Number(snowmax)
+var sinkspeed = Number(sinkspeed)
+var snowmaxsize = Number(snowmaxsize)
+var snowminsize = Number(snowminsize)
+
+///////////////////////////////////////////////////////////////////////////
+// CONFIGURATION ENDS HERE
+///////////////////////////////////////////////////////////////////////////
+// Do not edit below this line
+var snow=new Array()
+var marginbottom
+var marginright
+var timer
+var i_snow=0
+var x_mv=new Array();
+var crds=new Array();
+var lftrght=new Array();
+var browserinfos=navigator.userAgent 
+var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
+var ns6=document.getElementById&&!document.all
+var opera=browserinfos.match(/Opera/)  
+var browserok=ie5||ns6||opera
+
+function randommaker(range) {		
+	rand=Math.floor(range*Math.random())
+    return rand
+}
+
+function initsnow() {
+	if (ie5 || opera) {
+		marginbottom = document.body.clientHeight
+		marginright = document.body.clientWidth
+	}
+	else if (ns6) {
+		marginbottom = window.innerHeight
+		marginright = window.innerWidth
+	}
+	var snowsizerange=snowmaxsize-snowminsize
+	for (i=0;i<=snowmax;i++) {
+		crds[i] = 0;                      
+    	lftrght[i] = Math.random()*15;         
+    	x_mv[i] = 0.03 + Math.random()/10;
+		snow[i]=document.getElementById("s"+i)
+		snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
+		snow[i].size=randommaker(snowsizerange)+snowminsize
+		snow[i].style.fontSize=snow[i].size
+		snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
+		snow[i].sink=sinkspeed*snow[i].size/5
+		if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+		if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+		if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+		if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+		snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
+		snow[i].style.left=snow[i].posx
+		snow[i].style.top=snow[i].posy
+	}
+	movesnow()
+}
+
+function movesnow() {
+	for (i=0;i<=snowmax;i++) {
+		crds[i] += x_mv[i];
+		snow[i].posy+=snow[i].sink
+		snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i]);
+		snow[i].style.top=snow[i].posy
+		
+		if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
+			if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+			if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+			if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+			if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+			snow[i].posy=0
+		}
+	}
+	var timer=setTimeout("movesnow()",50)
+}
+
+for (i=0;i<=snowmax;i++) {
+	document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
+}
+if (browserok) {
+	window.onload=initsnow
+}
+   </script>
+   <!--lesplugin-->
+   <style type="text/css">
+    <!--
+
+td {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:link {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:visited {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:active {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:hover {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+body {background-color:#000000;background-image: url();}
+.champ {color: #000000;font-family:Arial;font-size:9pt;text-decoration:none;;background-color: #FFFFFF;border: 1px solid #000000;}
+Lcourant{150%}
+Edition{color:#000000;background-color:#FFFFFF;font-family:Arial;font-size:9pt;text-decoration:none;} 
+
+/*table { 
+    border-spacing:0;
+    border-collapse:separate !important;
+}*/
+table {font:inherit}
+.top table {color:inherit}
+table a:link {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:visited {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:active {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:hover {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+-->
+   </style>
+   <script type="text/JavaScript">
+    <!--
+function OpenWindow(URL,nom_win,parametres,largeur,hauteur)
+{
+var gauche = (screen.width - largeur)/2;
+var haut =  (screen.height - hauteur)/2;
+if (screen.width - largeur<1) {gauche=0}
+if (screen.height - hauteur<1) {hauteur=0}
+if (hauteur!="" || largeur!="") {parametres=parametres+',left='+gauche+',top='+haut}
+try
+	{w.close()}
+catch (ex)
+	{
+	}
+w=window.open(URL,nom_win,parametres);  
+w.window.innerWidth=largeur;
+w.window.innerHeight =hauteur;
+
+
+//Focus de la page pour chrome
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+if (is_chrome) {
+	w.parent.blur();
+	w.resizeTo(largeur,hauteur);
+	w.moveTo(gauche,haut);
+}
+w.focus(); 
+
+}
+
+function JumpMenu(cible,selectObj,restore)
+{ 
+eval(cible+".location='"+selectObj.options[selectObj.selectedIndex].value+"'");
+if (restore){selectObj.selectedIndex=0};
+}
+
+
+
+
+//Script de la charte
+
+
+
+
+//-->
+   </script>
+   <!--ACTUA87|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+  </meta>
+ </head>
+ <body onload=" initialise_traduction();" style="margin:0">
+  <noscript>
+   <!--Javascript Menu Link for no script browser-->
+   <br/>
+   <a href="accueil_175.htm">
+    Accueil
+   </a>
+   <br/>
+   <a href="contact_176.htm">
+    Contact
+   </a>
+   <br/>
+   <a href="presentation_178.htm">
+    Présentation
+   </a>
+   <br/>
+   <a href="les_musicos_182.htm">
+    Les Musicos
+   </a>
+   <br/>
+   <a href="agenda_204.htm">
+    Agenda
+   </a>
+   <br/>
+   <a href="galerie_photos_205.htm">
+    Galerie photos
+   </a>
+   <br/>
+   <a href="nos_escapades_206.htm">
+    Nos escapades
+   </a>
+   <br/>
+   <a href="notre_repertoire_207.htm">
+    Notre répertoire
+   </a>
+   <br/>
+   <a href="actualites_221.htm">
+    Actualités
+   </a>
+   <br/>
+   <a href="livre_d_or_486.htm">
+    Ritmo d'or
+   </a>
+   <br/>
+   <a href="espace_musicos_576.htm">
+    Espace Musicos
+   </a>
+  </noscript>
+  <div id="PosCharte" style="position:absolute;width:957px;height:580px;left:50%;margin-left:-478px;top:50%;margin-top:-290px;">
+   <div id="obj_35" style="position:absolute; left:150px; top:40px; width:807px; height:540px; z-index:1; overflow:auto;">
+    <div class="courant">
+     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+       <td>
+        <!--ACTUA41|||||||||||||||||||||||||||||||||||||||||-->
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <span style="font-size: 26pt;">
+          <font color="#ffff00">
+           <br/>
+          </font>
+         </span>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00" size="4">
+          Pour écouter ou visionner les   fichiers , cliquez sur le               
+  smiley.
+         </font>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00" size="4">
+          <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+          fichier  Audio
+         </font>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00" size="4">
+          <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+          fichier vidéo
+         </font>
+        </p>
+        <font color="#ffff00" size="5">
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <br/>
+         </p>
+        </font>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00">
+          <br/>
+         </font>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00" size="6">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               99   
+Luftballons
+              </font>
+             </span>
+            </span>
+           </font>
+          </span>
+         </font>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <font color="#ffff00">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00">
+            *****
+           </font>
+          </span>
+          <br/>
+         </font>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+          <font color="#ffff00" face="">
+           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+            <font color="#ffff00" size="6">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+               <font color="#ffff00" size="6">
+                Adélita
+               </font>
+              </span>
+             </span>
+            </font>
+           </span>
+           <a href="Files/adelita.mp3">
+            <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+           </a>
+          </font>
+         </span>
+        </p>
+        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+          <font color="#ffff00">
+           *****
+          </font>
+         </span>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <font color="#ffff00">
+           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+            <font color="#ffff00" size="6">
+             A 
+ L'attaque
+             <a href="https://www.youtube.com/watch?v=B51hx3QQRFg" target="_blank">
+              <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+             </a>
+            </font>
+           </span>
+          </font>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               Amoureux 
+ de ma   femme
+               <a href="https://www.youtube.com/watch?v=46Ymr07b8PI" target="_blank">
+                <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+               </a>
+              </font>
+             </span>
+            </span>
+           </font>
+          </span>
+         </p>
+         <p>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            A nos souvenirs
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Antinéa
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Arrantzaleak
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Bad Romance
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Bakalao
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Balada Boa
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            Balade   Nord-Irlandaise
+            <a href="https://youtu.be/_2xYLf2wfqA" target="_blank">
+             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+            </a>
+           </font>
+          </span>
+         </p>
+         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+           <font color="#ffff00" size="6">
+            *****
+           </font>
+          </span>
+          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+            <font color="#ffff00" size="6">
+             Balance
+            </font>
+           </span>
+           <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+             <font color="#ffff00" size="6">
+              *****
+             </font>
+            </span>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <font color="#ffff00" size="6">
+              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+               <font color="#ffff00" size="6">
+                Beber
+               </font>
+              </span>
+             </font>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               ******
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                <font color="#ffff00" size="6">
+                 Bella ciao
+                </font>
+               </span>
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               *****
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               Blinding lights
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               *****
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               Boom Ritmo
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+              <font color="#ffff00" size="6">
+               *****
+              </font>
+             </span>
+            </p>
+            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+             <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+               <font color="#ffff00" size="6">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                  <font color="#ffff00" size="6">
+                   C'est 
+ à Baba
+                  </font>
+                 </span>
+                </span>
+               </font>
+              </span>
+             </p>
+             <p>
+             </p>
+             <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+               <font color="#ffff00" size="6">
+                *****
+               </font>
+              </span>
+             </p>
+             <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+              <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+               <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Cosmo
+                 </font>
+                </span>
+               </span>
+              </p>
+              <p>
+              </p>
+              <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+               <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </span>
+              </p>
+              <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     Dans 
+ le port   d'Amsterdam
+                     <a href="Files/dans_le_port_d_amsterdam.mp3">
+                      <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                     </a>
+                     <a _blank"="" href="https://www.youtube.com/watch?v=8vUzGdpSREY&amp;feature=share? target=">
+                     </a>
+                    </font>
+                   </span>
+                  </span>
+                 </font>
+                </span>
+               </p>
+               <p>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Dans les yeux   d'Emilie
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Danza dell'autunno rosa
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Danza     kuduro
+                  <a _blank"="" href="https://www.youtube.com/watch?v=GzBM4DqR3pE&amp;feature=share? target=">
+                   <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Darla Dirladada
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                   <font color="#ffff00" size="6">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </font>
+                  </span>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  El porompompero
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Emmenez-moi
+                  <a href="Files/emmenez_moi.mp3">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Enola Gay
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Envole-moi
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Etre une  femme
+                  <a href="https://www.youtube.com/watch?v=Dg0uCUrMAGE" target="_blank">
+                   <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Every body needs   somebody
+                  <a href="Files/everybody_needs_somebody.mp3">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Fleur de Paris
+                  <a href="Files/fleur_de_paris.wav">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Freed from desire
+                  <a href="Files/freed_from_desire.mp3">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                  <a href="Files/svbd___nancy__12__mpeg4.mp4">
+                   <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Guk   Euskaraz
+                  <a href="Files/guk_euskaraz.mp3">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                  <a href="https://youtu.be/AJB06LlBIgM" target="_blank">
+                   <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Hegoak
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  Hot Stuff
+                  <a href="Files/hot_stuff.mp3">
+                   <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                  </a>
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                 <font color="#ffff00" size="6">
+                  *****
+                 </font>
+                </span>
+               </p>
+               <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                 <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                  <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     Il 
+ jouait du piano   debout
+                    </font>
+                   </span>
+                  </span>
+                 </p>
+                 <p>
+                 </p>
+                 <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                  <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                   <font color="#ffff00" size="6">
+                    *****
+                   </font>
+                  </span>
+                 </p>
+                 <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      Je 
+ te   donne
+                      <a href="https://youtu.be/fAHISVlp2H0" target="_blank">
+                       <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                      </a>
+                     </font>
+                    </span>
+                   </span>
+                  </p>
+                  <p>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     *****
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     Je t'emmène au   vent
+                     <a href="Files/je_temmene_au_vent.mp3">
+                      <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                     </a>
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     *****
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     Je te promets
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     *****
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     J'veux du soleil
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                    <font color="#ffff00" size="6">
+                     *****
+                    </font>
+                   </span>
+                  </p>
+                  <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La 
+ bamboula
+                      </font>
+                     </span>
+                    </span>
+                   </p>
+                   <p>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La  boiteuse
+                      <a href="Files/la_boiteuse.mp3">
+                       <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                      </a>
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La bonne du  curée
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La chanson des Restos
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La Chenille
+                     </font>
+                    </span>
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La Cumparsita
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      La Goffa Lolita
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <font color="#ffff00" size="6">
+                      *****
+                     </font>
+                    </span>
+                   </p>
+                   <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        La 
+ Hesta Banda
+                       </font>
+                      </span>
+                     </span>
+                    </p>
+                    <p>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       Laissez-moi   danser
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         *****
+                        </font>
+                       </span>
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La jument de Michao
+                       <a href="https://youtu.be/ljoPX0CLFtw" target="_blank">
+                        <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                       </a>
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La Main
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La marsellaise
+                       <a href="Files/11_novembre__1_.mov">
+                        <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                       </a>
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La marmite
+                      </font>
+                     </span>
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" face="" size="6">
+                       <a href="Files/la_marmite.wav">
+                        <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                       </a>
+                       <a href="https://youtu.be/FevnU8o6UfY" target="_blank">
+                        <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                       </a>
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La Même
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       La montagne
+                       <a href="corso_beaumont_monteux_038.mov">
+                       </a>
+                       <a href="https://www.youtube.com/watch?v=cO5OdnPWbb0" target="_blank">
+                        <img border="0" height="108" src="image_481.gif" style="width: 48px; height: 38px;" width="108"/>
+                       </a>
+                      </font>
+                     </span>
+                    </p>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                      <font color="#ffff00" size="6">
+                       *****
+                      </font>
+                     </span>
+                    </p>
+                    <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        La Pitxuri
+                        <a href="Files/la_pitxuri.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        La rue de notre amour
+                        <a href="Files/la_rue_de_notre_amour.wav">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Last night
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        La vache et les Barjos
+                        <a href="http://fan-de-ricoune.midiblogs.com/archive/2009/02/19/scoop-la-vache-version-banda.html" target="">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        L'aventurier
+                        <a href="Files/l_aventurier.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                        <a _blank"="" href="https://www.youtube.com/watch?v=BP_XB_6amJ4&amp;list=PLWHrGZy8zbzKT_-STYJFwNYvVZkwokLs_&amp;index=2? target=">
+                         <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Le Berger d'Aure
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           Le 
+ drapeau de   l'Europe
+                           <a href="Files/11_novembre_009.mov">
+                            <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                           </a>
+                          </font>
+                         </span>
+                        </span>
+                       </p>
+                       <p>
+                       </p>
+                       <p>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          *****
+                         </font>
+                        </span>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          L'encantada
+                          <a href="Files/l_encantada_banda.mp3">
+                           <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                          </a>
+                          <a href="https://www.youtube.com/watch?v=0bLC3aQFIf4" target="_blank">
+                           <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                          </a>
+                          <a =""="" href="https://www.facebook.com/profile.php?id=100008353538464&amp;fref=ts? target=" target=" 
+_blank">
+                          </a>
+                         </font>
+                        </span>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          *****
+                         </font>
+                        </span>
+                       </p>
+                      </p>
+                     </p>
+                    </span>
+                    <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         Les 
+ copains   d'abord
+                         <a href="Files/les_copains_d_abord.mp3">
+                          <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                         </a>
+                         <a href="https://youtu.be/4UotcUdMJ2o" target="_blank">
+                          <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                         </a>
+                        </font>
+                       </span>
+                      </span>
+                     </p>
+                     <p>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les mystérieuses cités   d'or
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les pélerins de Navarre
+                        <a href="Files/les_pelerins_de_navarre.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les Rois Mâges
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Le sport   roi
+                        <a href="Files/le_sport_roi.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les   Sardines
+                        <a href="Files/les_sardines.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                        <a href="https://youtu.be/PvSYjZ92VgU" target="_blank">
+                         <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les lacs du Connemara
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Les Yeux  d'Emilie
+                        <a href="Files/les_yeux_d_emilie.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        Le temps des   fleurs
+                        <a href="Files/le_temps_des_fleurs.mp3">
+                         <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                        </a>
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        L'immortelle
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                       <font color="#ffff00" size="6">
+                        *****
+                       </font>
+                      </span>
+                     </p>
+                     <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          Live 
+ is life
+                         </font>
+                        </span>
+                       </span>
+                      </p>
+                      <p>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         *****
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         Magic in the air
+                         <a href="https://youtu.be/M_zVf8Xk0k0" target="_blank">
+                          <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                         </a>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         *****
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         Manha do   carnaval
+                        </font>
+                       </span>
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         <a href="Files/medley_disco.wav">
+                         </a>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           *****
+                          </font>
+                         </span>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          Medley 
+ Disco
+                         </span>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          *****
+                         </span>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         Mignon mignon
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         *****
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         Misourlou
+                         <a href="Files/misourlou.mp3">
+                          <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                         </a>
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                        <font color="#ffff00" size="6">
+                         *****
+                        </font>
+                       </span>
+                      </p>
+                      <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           Nuit 
+ de folie
+                          </font>
+                         </span>
+                        </span>
+                       </p>
+                       <p>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          *****
+                         </font>
+                        </span>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          Pain't it Black
+                         </font>
+                        </span>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                         <font color="#ffff00" size="6">
+                          *****
+                         </font>
+                        </span>
+                       </p>
+                       <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Paquito 
+ Chocolatero
+                            <a href="Files/paquito_el_chocolatero.mp3">
+                             <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                            </a>
+                            <a href="https://youtu.be/uWGPuiWOEpY" target="_blank">
+                             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                            </a>
+                           </font>
+                          </span>
+                         </span>
+                        </p>
+                        <p>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           *****
+                          </font>
+                         </span>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           Partenaire   particulier
+                           <a href="https://youtu.be/k8FUKQWUtjk" target="_blank">
+                            <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                           </a>
+                          </font>
+                         </span>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           *****
+                          </font>
+                         </span>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           Party Rock Anthem
+                          </font>
+                         </span>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                          <font color="#ffff00" size="6">
+                           *****
+                          </font>
+                         </span>
+                        </p>
+                        <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Pedro 
+ va au Brésil
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" face="" size="6">
+                               <a href="Files/pedro_va_au_bresil.wav">
+                                <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                               </a>
+                              </font>
+                             </span>
+                            </font>
+                           </span>
+                          </span>
+                         </p>
+                         <p>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                             <font color="#ffff00" size="6">
+                              *****
+                             </font>
+                            </span>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                             Pépé
+                            </span>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                             *****
+                            </span>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Piranhas
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Pottoka
+                            <a href="Files/pottoka.mp3">
+                             <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Poupée de cire, poupée de   son
+                            <a href="Files/poupee_de_cire_poupee_de_son.mp3">
+                             <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                            </a>
+                            <a href="https://youtu.be/uJi4sJETchQ" target="_blank">
+                             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Quand la musique est  bonne
+                            <a _blank"="" href="https://www.youtube.com/watch?v=gQZsbPMdMFk&amp;list=PLWHrGZy8zbzKT_-STYJFwNYvVZkwokLs_&amp;index=3? target=">
+                             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Queen Ritmo
+                            <a _blank"="" href="https://www.youtube.com/watch?v=FupYNdoGm6g&amp;list=PLWHrGZy8zbzKT_-STYJFwNYvVZkwokLs_&amp;index=1? target=">
+                             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Que je  t'aime
+                            <a href="https://youtu.be/GPKXtitvmMo" target="_blank">
+                             <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Rivers of babylon
+                            <a href="Files/rivers_of_babylone.wav">
+                             <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                            </a>
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            Rolling in the deep
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                           <font color="#ffff00" size="6">
+                            *****
+                           </font>
+                          </span>
+                         </p>
+                         <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                               <font color="#ffff00" size="6">
+                                Santiano
+                                <a href="Files/soiree_banda_a_charnas__9_.mp4">
+                                 <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                                </a>
+                               </font>
+                              </span>
+                             </span>
+                            </font>
+                           </span>
+                          </p>
+                          <p>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Sara per que
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Se canta
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Si nos organizamos
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Sofia
+                             <a href="https://youtu.be/BgPFiZodUY8" target="_blank">
+                              <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                             </a>
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Take on me
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             Tarzan Boy
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                            <font color="#ffff00" size="6">
+                             *****
+                            </font>
+                           </span>
+                          </p>
+                          <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                           <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                            <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               The 
+ final   countdown
+                               <a href="https://youtu.be/50NNVeMH1IA" target="_blank">
+                                <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                               </a>
+                              </font>
+                             </span>
+                            </span>
+                           </p>
+                           <p>
+                           </p>
+                           <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               The Kids aren't alright
+                               <a href="Files/the_kids.mp3">
+                                <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                               </a>
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               ******
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               Timber
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               Todos las dias
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               Tornero
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               Vino Griego
+                               <a href="Files/vino_griego.mp3">
+                                <img border="0" height="58" src="image_240.jpg" style="width: 40px; height: 37px;" width="52"/>
+                               </a>
+                               <a href="https://youtu.be/ol_yDR09hU0" target="_blank">
+                                <img border="0" height="108" src="image_481.gif" style="width: 38px; height: 35px;" width="108"/>
+                               </a>
+                              </font>
+                             </span>
+                            </p>
+                            <p>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               Viva Espagna
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               You're my heart, you're my soul
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                               <br/>
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                               <font color="#ffff00" size="6">
+                                *************************************
+                               </font>
+                              </span>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               <u>
+                                Morceaux   spécial Noël
+                               </u>
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <br/>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <font color="#ff0000" face="Rage Italic" size="6">
+                              Adeste Fideles
+                             </font>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <font color="#ff0000" face="Rage Italic" size="6">
+                              *****
+                             </font>
+                             Ad
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Belle nuit, sainte   nuit
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Berceuse
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Il est né le divin   enfant
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Joy to the Word
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Les anges dans nos   campagnes
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Marche des rois   mages
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Mon beau sapin
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Noël Blanc
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Petit papa noel
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               Vive le vent
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               *****
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                               We wish you a merry Christmas
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ff0000" size="6">
+                              </font>
+                             </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font color="#ffff00" size="6">
+                              </font>
+                             </span>
+                            </p>
+                            <p class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+                             <span style='font-family: "Rage Italic"; font-size: 26pt;'>
+                              <font face="">
+                              </font>
+                             </span>
+                            </p>
+                           </p>
+                          </p>
+                         </p>
+                        </p>
+                       </p>
+                      </p>
+                     </p>
+                    </p>
+                   </p>
+                  </p>
+                 </p>
+                </p>
+               </p>
+              </p>
+             </p>
+            </p>
+           </p>
+          </p>
+         </p>
+        </p>
+       </td>
+      </tr>
+     </table>
+    </div>
+   </div>
+   <div id="obj_37" style="position:absolute; left:0px; top:264px; width:150px; height:197px; z-index:2; overflow:visible;">
+    <script src="config_menu_164.js" type="text/javascript">
+    </script>
+   </div>
+   <div id="obj_61" style="position:absolute; left:5px; top:61px; width:147px; height:201px; z-index:28">
+    <img border="0" height="201" src="image_154.jpg" width="147"/>
+   </div>
+   <div id="obj_65" style="position:absolute; left:21px; top:550px; width:107px; height:27px; z-index:29; overflow:visible;">
+    <!-- MoOsTiK v3 1269373360 -->
+    <script src="http://m3.moostik.net/js/?pseudo=ritmo&amp;police=cedric&amp;option=link&amp;lng=fr&amp;width=6" type="text/javascript">
+    </script>
+    <noscript>
+     <a href="http://ritmo.statistik.moostik.net/">
+      <img alt="[]" border="0" src="http://m3.moostik.net/img/?pseudo=ritmo&amp;police=cedric&amp;option=link&amp;lng=fr&amp;width=6"/>
+     </a>
+    </noscript>
+    <!-- KiTsOoM -->
+   </div>
+  </div>
+  <script language="javascript" type="text/javascript">
+   //Calcul de la hauteur du div top pour la gestion de l'affichage du Footer
+//TopHeight();
+initialise_traduction();
+  </script>
+ </body>
+</html>

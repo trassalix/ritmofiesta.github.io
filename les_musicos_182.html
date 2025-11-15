@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Les Musicos - Ritmofiesta | Banda de Vanosc</title>
+    
+    <meta name="description" content="Découvrez les musiciens de Ritmofiesta, banda de Vanosc">
+    <link href="styles.css" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Ritmofiesta, banda de Vanosc - Groupe musical d'animation de 20 à 30 musiciens amateurs. Animations pour corsos, carnavals, fêtes de village, férias, mariages en Ardèche.">
+    <meta name="keywords" content="banda, vanosc, ritmofiesta, harmonie ste cécile, musique, animation, fête, carnaval, mariage, ardèche">
+    <meta name="author" content="Ritmofiesta">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ritmofiesta - Banda de Vanosc">
+    <meta property="og:description" content="Groupe musical d'animation pour vos événements festifs">
+    <meta property="og:image" content="images/image_154.jpg">
+    <meta property="og:url" content="https://www.ritmofiesta.fr">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Stylesheets -->
+    <link href="styles.css" rel="stylesheet">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.nav-group');
+            let activeDropdown = null;
+
+            // Handle dropdown toggle
+            function toggleDropdown(dropdown) {
+                if (activeDropdown && activeDropdown !== dropdown) {
+                    activeDropdown.classList.remove('active');
+                }
+
+                const isActive = dropdown.classList.contains('active');
+                dropdown.classList.toggle('active');
+                activeDropdown = isActive ? null : dropdown;
+            }
+
+            // Add click handlers
+            document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleDropdown(trigger.parentElement);
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-group')) {
+                    dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+                    activeDropdown = null;
+                }
+            });
+
+            // Keep dropdown open when clicking inside
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                content.addEventListener('click', (e) => e.stopPropagation());
+            });
+
+            // Scroll reveal
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
+
+    <!-- Add musician-specific styles -->
+    <style>
+        .musicians-grid {
+            display: grid;
+            justify-content: center;
+            justify-items: center;
+            align-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            padding: 1rem;
+        }
+
+        @supports (grid-template-rows: masonry) {
+            .musicians-grid {
+                grid-template-rows: masonry;
+                justify-items: center;
+            }
+        }
+
+        .instrument-section {
+            margin-bottom: 4rem;
+        }
+
+        .instrument-section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+
+        .musician-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            justify-self: center;
+            align-self: center;
+        }
+
+        .musician-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .musician-card img {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+        }
+
+        .mascots {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .mascots img {
+            max-width: 250px;
+            margin: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="music-notes">
+        <span class="music-note" style="top: 80%; left: 5%;">♪</span>
+        <span class="music-note" style="top: 80%; right: 10%;">♫</span>
+        <span class="music-note" style="top: 80%; left: 15%;">♩</span>
+        <span class="music-note" style="top: 80%; right: 5%;">♬</span>
+    </div>
+    <section class="hero-section scroll-reveal">
+        <h1>Bienvenue chez <u>Ritmofiesta</u></h1>
+    </section>
+    <nav class="nav-container">
+        <div class="nav-menu">
+            <div class="nav-group">
+                <button class="dropdown-trigger">Principal</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Accueil</a>
+                    <a href="actualites_221.htm">Actualités</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">À Propos</button>
+                <div class="dropdown-content">
+                    <a href="presentation_178.htm">Présentation</a>
+                    <a href="les_musicos_182.html">Les Musicos</a>
+                    <a href="notre_repertoire_207.htm">Répertoire</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">Événements</button>
+                <div class="dropdown-content">
+                    <a href="agenda_204.htm">Agenda</a>
+                    <a href="galerie_photos_205.htm">Photos</a>
+                    <a href="nos_escapades_206.htm">Escapades</a>
+                    <a href="photos.html">Photos_test</a>
+                </div>
+            </div>
+            
+            <div class="nav-group">
+                <button class="dropdown-trigger">Espace Membre</button>
+                <div class="dropdown-content">
+                    <a href="contact_176.htm">Contact</a>
+                    <a href="livre_d_or_486.htm">Ritmo d'or</a>
+                    <a href="espace_musicos_576.htm">Espace Musicos</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="site-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/image_154.jpg" alt="Logo" width="147" height="201"/>
+                </a>
+            </div>
+        </aside>
+
+        <main class="content-area">
+                <!-- Percussions Section -->
+                <section class="instrument-section">
+                    <h2>Percussions</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_526.jpg" alt="Percussioniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_527.jpg" alt="Percussioniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_782.jpg" alt="Percussioniste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Clarinettes Section -->
+                <section class="instrument-section">
+                    <h2>Clarinettes</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_618.jpg" alt="Clarinettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_921.jpg" alt="Clarinettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_533.jpg" alt="Clarinettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_532.jpg" alt="Clarinettiste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Flûtes / Piccolos / glockenspiel-->
+                <section class="instrument-section">
+                    <h2> Flûtes / Piccolos / glockenspiel</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_535.jpg" alt="Flûtiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_569.jpg" alt="Flûtiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_595.jpg" alt="Flûtiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_842.jpg" alt="Flûtiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_843.jpg" alt="Flûtiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_879.jpg" alt="Flûtiste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Saxophones Altos-->
+                <section class="instrument-section">
+                    <h2> Saxophones Altos</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_988.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_844.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_538.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_536.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_783.jpg" alt="Saxophoniste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Saxophones Ténors et Barytons -->
+
+                <section class="instrument-section">
+                    <h2> Saxophones Ténors et Barytons</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_619.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_540.jpg" alt="Saxophoniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_537.jpg" alt="Saxophoniste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trompettes Section -->
+                <section class="instrument-section">
+                    <h2>Trompettes</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_1129.jpg" alt="Trompettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_541.jpg" alt="Trompettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_544.jpg" alt="Trompettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_545.jpg" alt="Trompettiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_691.jpg" alt="Trompettiste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trombones Section -->
+                <section class="instrument-section">
+                    <h2> Trombones</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_625.jpg" alt="Tromboniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_622.jpg" alt="Tromboniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_621.jpg" alt="Tromboniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_552.jpg" alt="Tromboniste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_551.jpg" alt="Tromboniste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basses Section-->
+                <section class="instrument-section">
+                    <h2> Basses</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_553.jpg" alt="Bassiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_556.jpg" alt="Bassiste">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_626.jpg" alt="Bassiste">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mascots Section -->
+                <section class="instrument-section">
+                    <h2> Nos Mascottes</h2>
+                    <div class="musicians-grid">
+                        <div class="musician-card">
+                            <img src="images/image_571.jpg" alt="Mascotte 1">
+                        </div>
+                        <div class="musician-card">
+                            <img src="images/image_572.jpg" alt="Mascotte 2">
+                        </div>
+                    </div>
+                </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: contact@ritmofiesta.fr</li>
+                    <li>Tél: +33 (0)4 XX XX XX XX</li>
+                    <li>Vanosc, Ardèche, France</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="presentation_178.htm">Qui sommes-nous</a></li>
+                    <li><a href="agenda_204.htm">Nos événements</a></li>
+                    <li><a href="galerie_photos_205.htm">Galerie photos</a></li>
+                    <li><a href="contact_176.htm">Nous contacter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ritmofiesta - Tous droits réservés</p>
+        </div>
+    </footer>
+</body>
+</html>

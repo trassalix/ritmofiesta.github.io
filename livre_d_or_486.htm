@@ -1,0 +1,2473 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" >-->
+<html dir="ltr" lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>
+   www.ritmofiesta.fr
+  </title>
+  <meta content="Banda de Vanosc" name="description"/>
+  <meta content="banda,vanosc,ritmofiesta,harmonie ste cécile," name="keywords"/>
+  <meta content="IziSpot 4.70 (www.izispot.com)" name="generator"/>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="IE=8,chrome=1" http-equiv="X-UA-Compatible">
+   <!--lesplugin-->
+   <script type="text/javascript">
+    snowingzone="1";
+snowmax="35";
+sinkspeed="0.6";
+snowmaxsize="22";
+snowminsize="8";
+   </script>
+   <style type="text/css">
+    BODY {scrollbar-face-color:#FFFF00;}
+BODY {scrollbar-shadow-color:#000000;}
+BODY {scrollbar-highlight-color:#FFFFFF;}
+BODY {scrollbar-3dlight-color:#000000;}
+BODY {scrollbar-darkshadow-color:#000000;}
+BODY {scrollbar-track-color:#FFFF00;}
+BODY {scrollbar-arrow-color:#0F0F0F;}
+   </style>
+   <script src="global_155.js" type="text/javascript">
+   </script>
+   <script src="language_156.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+    var dmWorkPath=""
+   </script>
+   <script src="dmenu_158.js" type="text/javascript">
+   </script>
+   <script src="dmenu_dyn_159.js" type="text/javascript">
+   </script>
+   <script src="dmenu_popup_160.js" type="text/javascript">
+   </script>
+   <script src="dmenu_add_161.js" type="text/javascript">
+   </script>
+   <!--JQuery-->
+   <script src="jquery-1.9.1.min_450.js" type="text/javascript">
+   </script>
+   <script src="jquery.easing.1.3_451.js" type="text/javascript">
+   </script>
+   <script src="jquery.bxslider_452.js" type="text/javascript">
+   </script>
+   <script src="jquery.colorbox-min_453.js" type="text/javascript">
+   </script>
+   <!-- bxSlider CSS file -->
+   <link href="jquery.bxslider_454.htm" rel="stylesheet" type="text/css"/>
+   <link href="jquery.colorbox_455.htm" rel="stylesheet" type="text/css"/>
+   <!--<link rel="stylesheet" type="text/css" href="normalize_456.htm" />-->
+   <script type="text/javascript">
+    // Set the colors for the snow. Add as many colors as you like
+var snowcolor=new Array("#AAAACC","#DDDDFF","#CCCCDD","#F3F3F3","#F0FFFF")
+
+// Set the fonts, that create the snowflakes. Add as many fonts as you like
+var snowtype=new Array("Arial Black","Arial Narrow","Times","Comic Sans MS")
+
+// Set the letter that creates your snowflake (recommended: * )
+var snowletter="*"
+
+var snowingzone = Number(snowingzone)
+var snowmax = Number(snowmax)
+var sinkspeed = Number(sinkspeed)
+var snowmaxsize = Number(snowmaxsize)
+var snowminsize = Number(snowminsize)
+
+///////////////////////////////////////////////////////////////////////////
+// CONFIGURATION ENDS HERE
+///////////////////////////////////////////////////////////////////////////
+// Do not edit below this line
+var snow=new Array()
+var marginbottom
+var marginright
+var timer
+var i_snow=0
+var x_mv=new Array();
+var crds=new Array();
+var lftrght=new Array();
+var browserinfos=navigator.userAgent 
+var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
+var ns6=document.getElementById&&!document.all
+var opera=browserinfos.match(/Opera/)  
+var browserok=ie5||ns6||opera
+
+function randommaker(range) {		
+	rand=Math.floor(range*Math.random())
+    return rand
+}
+
+function initsnow() {
+	if (ie5 || opera) {
+		marginbottom = document.body.clientHeight
+		marginright = document.body.clientWidth
+	}
+	else if (ns6) {
+		marginbottom = window.innerHeight
+		marginright = window.innerWidth
+	}
+	var snowsizerange=snowmaxsize-snowminsize
+	for (i=0;i<=snowmax;i++) {
+		crds[i] = 0;                      
+    	lftrght[i] = Math.random()*15;         
+    	x_mv[i] = 0.03 + Math.random()/10;
+		snow[i]=document.getElementById("s"+i)
+		snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
+		snow[i].size=randommaker(snowsizerange)+snowminsize
+		snow[i].style.fontSize=snow[i].size
+		snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
+		snow[i].sink=sinkspeed*snow[i].size/5
+		if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+		if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+		if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+		if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+		snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
+		snow[i].style.left=snow[i].posx
+		snow[i].style.top=snow[i].posy
+	}
+	movesnow()
+}
+
+function movesnow() {
+	for (i=0;i<=snowmax;i++) {
+		crds[i] += x_mv[i];
+		snow[i].posy+=snow[i].sink
+		snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i]);
+		snow[i].style.top=snow[i].posy
+		
+		if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
+			if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+			if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+			if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+			if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+			snow[i].posy=0
+		}
+	}
+	var timer=setTimeout("movesnow()",50)
+}
+
+for (i=0;i<=snowmax;i++) {
+	document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
+}
+if (browserok) {
+	window.onload=initsnow
+}
+   </script>
+   <!--lesplugin-->
+   <style type="text/css">
+    <!--
+
+td {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:link {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:visited {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:active {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+a:hover {color:#000000;font-family:Arial;font-size:9pt;text-decoration:none;}
+body {background-color:#000000;background-image: url();}
+.champ {color: #000000;font-family:Arial;font-size:9pt;text-decoration:none;;background-color: #FFFFFF;border: 1px solid #000000;}
+Lcourant{150%}
+Edition{color:#000000;background-color:#FFFFFF;font-family:Arial;font-size:9pt;text-decoration:none;} 
+
+/*table { 
+    border-spacing:0;
+    border-collapse:separate !important;
+}*/
+table {font:inherit}
+.top table {color:inherit}
+table a:link {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:visited {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:active {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+table a:hover {color:inherit;font-family:inherit;font-size:inherit;text-decoration:inherit;}
+-->
+   </style>
+   <script type="text/JavaScript">
+    <!--
+function OpenWindow(URL,nom_win,parametres,largeur,hauteur)
+{
+var gauche = (screen.width - largeur)/2;
+var haut =  (screen.height - hauteur)/2;
+if (screen.width - largeur<1) {gauche=0}
+if (screen.height - hauteur<1) {hauteur=0}
+if (hauteur!="" || largeur!="") {parametres=parametres+',left='+gauche+',top='+haut}
+try
+	{w.close()}
+catch (ex)
+	{
+	}
+w=window.open(URL,nom_win,parametres);  
+w.window.innerWidth=largeur;
+w.window.innerHeight =hauteur;
+
+
+//Focus de la page pour chrome
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+if (is_chrome) {
+	w.parent.blur();
+	w.resizeTo(largeur,hauteur);
+	w.moveTo(gauche,haut);
+}
+w.focus(); 
+
+}
+
+function JumpMenu(cible,selectObj,restore)
+{ 
+eval(cible+".location='"+selectObj.options[selectObj.selectedIndex].value+"'");
+if (restore){selectObj.selectedIndex=0};
+}
+
+
+
+
+//Script de la charte
+
+
+
+
+//-->
+   </script>
+   <!--ACTUA87|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+  </meta>
+ </head>
+ <body onload=" initialise_traduction();" style="margin:0">
+  <noscript>
+   <!--Javascript Menu Link for no script browser-->
+   <br/>
+   <a href="accueil_175.htm">
+    Accueil
+   </a>
+   <br/>
+   <a href="contact_176.htm">
+    Contact
+   </a>
+   <br/>
+   <a href="presentation_178.htm">
+    Présentation
+   </a>
+   <br/>
+   <a href="les_musicos_182.htm">
+    Les Musicos
+   </a>
+   <br/>
+   <a href="agenda_204.htm">
+    Agenda
+   </a>
+   <br/>
+   <a href="galerie_photos_205.htm">
+    Galerie photos
+   </a>
+   <br/>
+   <a href="nos_escapades_206.htm">
+    Nos escapades
+   </a>
+   <br/>
+   <a href="notre_repertoire_207.htm">
+    Notre répertoire
+   </a>
+   <br/>
+   <a href="actualites_221.htm">
+    Actualités
+   </a>
+   <br/>
+   <a href="livre_d_or_486.htm">
+    Ritmo d'or
+   </a>
+   <br/>
+   <a href="espace_musicos_576.htm">
+    Espace Musicos
+   </a>
+  </noscript>
+  <div id="PosCharte" style="position:absolute;width:957px;height:580px;left:50%;margin-left:-478px;top:50%;margin-top:-290px;">
+   <div id="obj_35" style="position:absolute; left:150px; top:40px; width:807px; height:540px; z-index:1; overflow:auto;">
+    <div class="courant">
+     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+       <td>
+        <!--ACTUA18||||||||||||||||||-->
+        <font color="#ffff00">
+        </font>
+        <p align="center" style="margin: 0cm 0cm 10pt;">
+         <font color="#ffff00" size="5">
+          <u>
+           LIVRE D'OR
+          </u>
+         </font>
+        </p>
+        <p align="center" style="margin: 0cm 0cm 10pt;">
+         <font color="#ffff00" size="5">
+          <br/>
+         </font>
+        </p>
+        <p align="center" style="margin: 0cm 0cm 10pt;">
+         <font color="#ffff00">
+          Si vous désirez laisser un commentaire, un petit mot sympa, etc.... merci de le faire via notre adresse  mail
+          <a href="mailto:contact@ritmofiesta.fr">
+           <font color="#ffff00" size="3">
+            <strong>
+             contact@ritmofiesta.fr
+            </strong>
+           </font>
+          </a>
+          , le message sera publié sur cette page.
+         </font>
+        </p>
+        <p align="center" style="margin: 0cm 0cm 10pt;">
+         <font color="#ffff00">
+          <br/>
+         </font>
+        </p>
+        <p>
+         <br/>
+        </p>
+        <p>
+         <font color="#ffff00" size="5">
+          <u>
+           Posté le 15/07/2024
+          </u>
+         </font>
+        </p>
+        <p>
+         <br/>
+        </p>
+        <font color="#ffff00" size="5">
+         <p>
+          <font color="#848484" size="3">
+           <font color="#ffff00" face="Arial" size="3">
+            Quel bonheur davoir pu vous avoir à nos côtés pour notre
+mariage !
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Arial" size="3">
+            Un super vin dhonneur pour lequel vous avez savamment
+rajouté les épices.
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Arial" size="3">
+            Merci davoir porté jusquà nos curs les vibrations
+chaleureuses de vos notes.
+           </font>
+          </font>
+         </p>
+         <p>
+          <font face="Arial" size="3">
+           Xavier Balandraud (
+           <font face="Arial" size="3">
+            St Symphorien de Mahun)
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#848484" size="3">
+           <br/>
+          </font>
+         </p>
+        </font>
+        <p>
+         <br/>
+        </p>
+        <p>
+         <br/>
+        </p>
+        <p>
+         <font color="#ffff00" size="5">
+          <u>
+           Posté le 28/05/2024
+          </u>
+         </font>
+        </p>
+        <p>
+         <font color="#ffff00">
+          Bonsoir, un petit message pour vous dire que j'ai fait partie de la bande de l'enterrement de vie de garçon de samedi soir...
+         </font>
+        </p>
+        <p>
+         <font color="#ffff00">
+          Un grand merci et un grand bravo à vous pour votre prestation. On s'est vraiment régalé, on n'avait vraiment pas envie que ça s'arrête. L'ambiance, le répertoire, la vibration, l'état d'esprit, tout était parfait...
+         </font>
+        </p>
+        <p>
+         <font color="#ffff00">
+          Ne changez rien ! Bonne soirée...
+         </font>
+        </p>
+        <p>
+         <font color="#ffff00">
+          <u>
+           <br/>
+          </u>
+         </font>
+        </p>
+        <p>
+         <font color="#ffff00" size="5">
+          <u>
+           Posté le 26/08/22
+          </u>
+         </font>
+        </p>
+        <p>
+         <br/>
+        </p>
+        <font color="#ffff00" size="5">
+         <p>
+          <font color="#000000" size="3">
+           <font size="3">
+            <font color="#ffff00">
+             <font face="Calibri">
+              Cc, toute l'équipe. Merci beaucoup pour ce dimanche. Vous
+avez mis le feu à Sauvessanges !
+             </font>
+             <span style='font-family: "Segoe UI Emoji",sans-serif; mso-bidi-font-family: "Segoe UI Emoji";'>
+              ??
+             </span>
+            </font>
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Calibri" size="3">
+            Que du bonheur de vous avoir eu ! vous êtes vraiment au top
+!
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Calibri" size="3">
+            On a fait une fête patronale comme jamais et vous avez joué
+un grand rôle pour que la journée soit parfaite.
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font size="3">
+            <font color="#ffff00">
+             <font face="Calibri">
+              <span style="mso-spacerun: yes;">
+              </span>
+              ...peut-être que vous
+allez revenir bientôt
+             </font>
+             <span style='font-family: "Segoe UI Emoji",sans-serif; mso-bidi-font-family: "Segoe UI Emoji";'>
+              ????
+             </span>
+            </font>
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Calibri" size="3">
+            Encore merci
+           </font>
+          </font>
+         </p>
+         <p>
+          <font color="#ffff00" size="3">
+           <font color="#ffff00" face="Calibri" size="3">
+           </font>
+          </font>
+          <p>
+           <font color="#ffff00" size="3">
+            <font color="#ffff00" face="Calibri" size="3">
+             <font size="3">
+              <font color="#ffff00">
+               <font face="Calibri">
+                Martine ROUSSET (la joueuse de grosse caisse à la mairie
+               </font>
+               <span style='font-family: "Segoe UI Emoji",sans-serif; mso-bidi-font-family: "Segoe UI Emoji";'>
+                ??
+               </span>
+               <font face="Calibri">
+                )
+               </font>
+              </font>
+             </font>
+            </font>
+           </font>
+          </p>
+          <p>
+          </p>
+          <p>
+           <p>
+            <p>
+             <font color="#ffff00" size="3">
+              <br/>
+             </font>
+            </p>
+            <p>
+            </p>
+            <p>
+            </p>
+           </p>
+          </p>
+         </p>
+        </font>
+        <p>
+         <p>
+          <p>
+           <font color="#ffff00" size="5">
+            <u>
+             Posté le 16/08/22
+            </u>
+           </font>
+          </p>
+          <p>
+          </p>
+          <p>
+          </p>
+          <font color="#ffff00" size="5">
+           <p style="margin: 0cm 0cm 10pt;">
+            <font color="#ffff00">
+             <font color="#ffff00" face="Calibri" size="3">
+              L'ensemble des conscrits et parents vous remercient pour l'ambiance que vous avez mis ce week-end.
+             </font>
+            </font>
+           </p>
+           <p style="margin: 0cm 0cm 10pt;">
+            <font face="Calibri" size="3">
+             Merci à tous.
+            </font>
+           </p>
+           <p style="margin: 0cm 0cm 10pt;">
+            <font face="Calibri" size="3">
+             Lennie (Vanosc)
+            </font>
+           </p>
+          </font>
+          <p>
+           <br/>
+          </p>
+          <p>
+           <font color="#ffff00" size="5">
+            <u>
+             Posté le 05/07/22
+            </u>
+           </font>
+          </p>
+          <font color="#ffff00" size="5">
+           <p style="margin: 0cm 0cm 10pt;">
+            <font color="#ffff00">
+             <font color="#ffff00" face="Calibri" size="3">
+              Merci à vous encore cette année pour cette super ambiance.
+             </font>
+            </font>
+           </p>
+           <p style="margin: 0cm 0cm 10pt;">
+            <font color="#ffff00">
+             <font color="#ffff00" face="Calibri" size="3">
+              La P'tite Féria du 07
+             </font>
+            </font>
+           </p>
+           <p style="margin: 0cm 0cm 10pt;">
+            <font face="Calibri" size="3">
+             Champagne
+            </font>
+           </p>
+          </font>
+          <p>
+           <br/>
+          </p>
+          <p>
+           <font color="#ffff00" size="5">
+            <u>
+             <br/>
+            </u>
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00" size="5">
+            <u>
+             Posté le 06/04/22
+            </u>
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00" size="5">
+           </font>
+           <font color="#ffff00">
+            <br/>
+           </font>
+          </p>
+          <p style="margin: 0cm 0cm 10pt;">
+           <font color="#ffff00" face="Calibri">
+            Bonjour,
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00">
+            <font color="#ffff00" face="Calibri">
+             Nous tenions à vous remercier pour l'animation faite lors de
+notre corso de dimanche !
+            </font>
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00">
+            <font color="#ffff00" face="Calibri">
+             Nous espérons que vous avez passé un aussi agréable moment
+que nous !
+            </font>
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00">
+            <font color="#ffff00" face="Calibri">
+             Au plaisir de vous revoir !
+            </font>
+           </font>
+          </p>
+          <p>
+           <font color="#ffff00">
+            <font color="#ffff00" face="Calibri">
+            </font>
+           </font>
+           <p>
+            <font color="#ffff00">
+             <font color="#ffff00" face="Calibri">
+              <font face="Calibri">
+               <font color="#ffff00">
+                <span style="mso-spacerun: yes;">
+                </span>
+                Virginie et
+Emmanuel GUINET
+                <span style="mso-spacerun: yes;">
+                </span>
+               </font>
+              </font>
+             </font>
+            </font>
+           </p>
+           <p>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <font face="Calibri">
+              <font color="#ffff00">
+               <span style="mso-spacerun: yes;">
+               </span>
+               <span style="mso-spacerun: yes;">
+               </span>
+               Présidents 2022
+              </font>
+             </font>
+            </font>
+           </p>
+           <p>
+            <br/>
+           </p>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 24/08/2021
+             </u>
+            </font>
+           </p>
+           <font color="#ffff00">
+            <p>
+             <br/>
+            </p>
+            <p>
+             <font color="#ffff00">
+              <font color="#ffff00" face="Calibri">
+               Salut les amis Ritmo,
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00">
+              <font color="#ffff00" face="Calibri">
+               Les conscrits ainsi que parents vous remercient beaucoup
+pour votre prestation et l'ambiance que vous avez mise, merci beaucoup, vous
+êtes formidable.
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00">
+              <br/>
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00" face="Calibri">
+              Classe 2023 de St Alban dAy (07) et leurs parents.
+             </font>
+            </p>
+            <p>
+             <font color="#000000">
+              <br/>
+             </font>
+            </p>
+            <p align="center" style="margin: 0cm 0cm 10pt;">
+             <br/>
+            </p>
+           </font>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 16/08/2021
+             </u>
+            </font>
+           </p>
+           <p>
+            <u>
+             <font color="#ffff00" size="5">
+              <br/>
+             </font>
+            </u>
+           </p>
+           <p>
+            <u>
+             <font color="#ffff00">
+              Comme d'habitude Ritmo a mis une ambiance de fou. Bravo vous êtes juste exceptionnels !!!!
+             </font>
+            </u>
+           </p>
+           <p>
+            <u>
+             <font color="#ffff00">
+              Karine Soubeyrat-Montagne
+             </font>
+            </u>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <u>
+              <br/>
+             </u>
+            </font>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <u>
+              <br/>
+             </u>
+            </font>
+           </p>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 27/08/2020
+             </u>
+            </font>
+            <br/>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <br/>
+            </font>
+           </p>
+           <font color="#ffff00">
+            <p>
+             <font color="#000000">
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <span style="color: yellow;">
+              <font face="Calibri">
+               Bonjour,
+              </font>
+             </span>
+            </p>
+            <p>
+             <font color="#000000">
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <span style="color: yellow;">
+              <font face="Calibri">
+               Je souhaitais vous remercier à
+nouveau pour la belle soirée que vous nous avez offerte grâce à votre
+prestation.
+              </font>
+             </span>
+            </p>
+            <p>
+             <font color="#000000">
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <span style="color: yellow;">
+              <font face="Calibri">
+               Les retours sont unanimes pour
+dire que vous avez été exceptionnels.
+              </font>
+             </span>
+            </p>
+            <p>
+             <font color="#000000">
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <span style="color: yellow;">
+              <font face="Calibri">
+               Sachez que je n'hésiterai pas à
+vous solliciter à nouveau et continuez, ne changez rien.
+              </font>
+             </span>
+            </p>
+            <p>
+             <font color="#000000">
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <span style="color: yellow;">
+              <font face="Calibri">
+               Annie FOURNEL
+              </font>
+             </span>
+            </p>
+            <p>
+             <font color="#000000">
+             </font>
+             <br/>
+            </p>
+            <p align="center" style="margin: 0cm 0cm 10pt;">
+             <br/>
+            </p>
+           </font>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 04/11/2019
+             </u>
+            </font>
+            <br/>
+           </p>
+           <p>
+            <br/>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <font color="#ffff00">
+              <font color="#ffff00">
+               <font face="Calibri">
+                Un énorme merci à vous ! Notre soirée a été un succès
+               </font>
+               <font face="Calibri">
+                .
+Le retour es plus que positif. Nous vous recommandons vivement pour une super
+ambiance.
+               </font>
+              </font>
+             </font>
+            </font>
+           </p>
+           <p>
+            <font color="#ffff00" face="Calibri">
+             <br/>
+            </font>
+           </p>
+           <p>
+            <font color="#ffff00" face="Calibri">
+             Stéphanie de St Cyr (07)
+            </font>
+           </p>
+           <font color="#ffff00">
+            <p>
+             <font color="#ffff00">
+              <br/>
+             </font>
+            </p>
+           </font>
+           <p>
+            <font color="#ffff00">
+             <br/>
+            </font>
+           </p>
+           <font color="#ffff00">
+            <p>
+             <u>
+              <font size="5">
+               Posté le 30/09/2019
+              </font>
+             </u>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <br/>
+             </font>
+            </p>
+            <p style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00" face="Calibri">
+              Bonjour,
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <font color="#ffff00" face="Calibri">
+               Hier nous étions à Usson en Forez au festival, c'était très
+bien, merci encore à vous et félicitation à vos jeunes.
+              </font>
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <font face="Calibri">
+               <font color="#ffff00">
+                <span style="mso-spacerun: yes;">
+                </span>
+                Continuez
+                <span style="mso-spacerun: yes;">
+                </span>
+                à distribuer joie et bonne humeur lors de vos
+prestations
+               </font>
+              </font>
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <font color="#ffff00" face="Calibri">
+               Cordialement
+              </font>
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <font color="#ffff00" face="Calibri">
+               Geneviève
+               <span style="mso-spacerun: yes;">
+               </span>
+               Emblavez
+haute Loire
+              </font>
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <font color="#ffff00">
+              <br/>
+             </font>
+            </p>
+            <p align="left" style="margin: 0cm 0cm 10pt;">
+             <br/>
+            </p>
+           </font>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 12/09/2019
+             </u>
+            </font>
+           </p>
+           <p>
+            <br/>
+           </p>
+           <font color="#ffff00" size="5">
+            <p>
+             <font color="#000000" size="3">
+              <font color="#ffff00" face="Calibri" size="3">
+               Un grand BRAVO à toute l'équipe, vous avez mis le feu !
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00" size="3">
+              <font face="Calibri">
+               <font size="3">
+                <font color="#ffff00">
+                 <span style="mso-spacerun: yes;">
+                 </span>
+                 A bientôt
+                </font>
+               </font>
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00" size="3">
+              <font face="Calibri">
+               <font size="3">
+                <font color="#ffff00">
+                 <span style="mso-spacerun: yes;">
+                 </span>
+                 Cordialement
+                </font>
+               </font>
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00" size="3">
+              <font color="#ffff00" face="Calibri" size="3">
+               Angélique (07)
+              </font>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00" size="3">
+              <br/>
+             </font>
+            </p>
+           </font>
+           <p>
+            <font color="#ffff00">
+             <br/>
+            </font>
+           </p>
+           <p>
+            <font color="#ffff00">
+             <br/>
+            </font>
+           </p>
+           <font color="#ffff00">
+            <p>
+             <u>
+              <font size="5">
+               Posté le 26/08/2019
+              </font>
+             </u>
+            </p>
+            <p>
+             <font size="5">
+              <br/>
+             </font>
+            </p>
+            <p>
+             <font size="5">
+              <font color="#ffff00" size="3">
+               <font color="#ffff00" face="Calibri" size="3">
+                Bravo et un grand merci à Ritmofiesta Vanosc pour leur
+prestation mémorable ... et jusque tard dans la nuit il paraît
+               </font>
+              </font>
+             </font>
+             <p>
+              <font size="5">
+               <font color="#ffff00" size="3">
+                Fred de Montregard (43)
+               </font>
+              </font>
+             </p>
+             <p>
+             </p>
+             <p>
+              <br/>
+             </p>
+             <p>
+              <br/>
+             </p>
+             <p align="center" style="margin: 0cm 0cm 10pt;">
+              <br/>
+             </p>
+            </p>
+           </font>
+           <font color="#ffff00">
+            <p>
+             <font color="#ffff00" size="5">
+              <u>
+               Posté le 23/07/2019
+              </u>
+             </font>
+            </p>
+            <p>
+             <u>
+              <font size="5">
+               <br/>
+              </font>
+             </u>
+            </p>
+            <p>
+             <p>
+             </p>
+             <font color="#ffff00" size="5">
+              <p>
+               <font color="#000000" size="3">
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri" size="3">
+                C'est au nom de tous les musiciens et des accompagnateurs
+que je vous remercie pour cette soirée que vous nous avez fait vivre.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="3">
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri" size="3">
+                Très bon accueil de tout le monde, organisations au top,
+repas copieux et delicieux, boissons à volonté.... et surtout ambiance musicale
+extraordinaire avec le public et avec les autres formations.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="3">
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri" size="3">
+                Que du positif.....
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="3">
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri" size="3">
+                <font color="#ffff00" face="Calibri" size="3">
+                 A bientôt car on se retrouve fin septembre à Usson en
+Forez...
+                </font>
+               </font>
+               <p>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Bon été.
+                 <font color="#ffff00" size="3">
+                 </font>
+                </font>
+                <p>
+                 <font color="#ffff00" face="Calibri" size="3">
+                  <font color="#ffff00" size="3">
+                   <font color="#ffff00" size="3">
+                   </font>
+                  </font>
+                 </font>
+                </p>
+                <font color="#ffff00" face="Calibri" size="3">
+                 <font color="#ffff00" size="3">
+                  <font color="#ffff00" face="Calibri" size="3">
+                   Richard
+                  </font>
+                 </font>
+                </font>
+                <p>
+                </p>
+                <p>
+                </p>
+                <p>
+                 <p>
+                  <font color="#ffff00" size="3">
+                  </font>
+                 </p>
+                 <p style="margin: 0cm 0cm 10pt;">
+                  <font color="#ffff00" face="Calibri" size="3">
+                   La BANDA VOREY ' V (43)
+                  </font>
+                  <p>
+                   <p>
+                    <font color="#ffff00" face="Calibri" size="3">
+                     <br/>
+                    </font>
+                   </p>
+                   <p>
+                   </p>
+                   <font color="#ffff00" face="Calibri" size="3">
+                    <br/>
+                   </font>
+                   <p>
+                   </p>
+                   <p>
+                   </p>
+                  </p>
+                 </p>
+                </p>
+               </p>
+              </p>
+             </font>
+            </p>
+           </font>
+           <p>
+            <br/>
+           </p>
+           <p align="center" style="margin: 0cm 0cm 10pt;">
+           </p>
+           <p>
+            <font color="#ffff00" size="5">
+             <u>
+              Posté le 22/07/2019
+             </u>
+            </font>
+           </p>
+           <p>
+            <p>
+             <font color="#ffff00" size="5">
+              <br/>
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00">
+              Un grand merci à Ritmo et aux bénévoles pour la Fiesta. C'était à nouveau très sympa. Bon été à tous.
+             </font>
+            </p>
+            <p>
+             <font color="#ffff00">
+              <br/>
+             </font>
+            </p>
+            <p>
+             <p>
+              <font color="#ffff00">
+               Adrien.M
+              </font>
+             </p>
+             <font color="#ffff00">
+              <p>
+               <br/>
+              </p>
+             </font>
+             <p>
+             </p>
+             <p>
+              <br/>
+             </p>
+             <p>
+              <font color="#ffff00" size="5">
+               <u>
+                Posté le 17/10/2018
+               </u>
+              </font>
+             </p>
+             <p>
+              <p>
+               <font color="#ffff00" size="5">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Au nom de tous les adhérents de l'association Coeur de Douceur, je vous remercie très sincèrement pour votre contribution et votre soutien, qui nous ont permis la mise en place et la réussite de la Journée Rose du 6 octobre 2018.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Annie Bonnardel
+               </font>
+              </p>
+              <p>
+               <u>
+                <font color="#ffff00">
+                 <br/>
+                </font>
+               </u>
+              </p>
+              <br/>
+              <p>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 21/05/2018
+                </u>
+               </font>
+               <br/>
+              </p>
+              <p>
+               <span class="_47e3 _5mfr" style="margin: 0px 1px; color: rgb(29, 33, 41); text-transform: none; line-height: 0; text-indent: 0px; letter-spacing: normal; font-family: Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; word-spacing: 0px; vertical-align: middle; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+                <font color="#000000" face="Times New Roman" size="3">
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box;'>
+                  <font color="#ffff00">
+                  </font>
+                 </span>
+                </font>
+               </span>
+              </p>
+              <p>
+               <span class="_47e3 _5mfr" style="margin: 0px 1px; color: rgb(29, 33, 41); text-transform: none; line-height: 0; text-indent: 0px; letter-spacing: normal; font-family: Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; word-spacing: 0px; vertical-align: middle; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+                <font color="#000000" face="Times New Roman" size="3">
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box;'>
+                  <font color="#ffff00">
+                   Bravo et merci à vous
+. Vous êtes géniaux
+                  </font>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <img alt="https://static.xx.fbcdn.net/images/emoji.php/v9/fcc/1/16/1f3bc.png" height="16" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABlUlEQVR42pXTSUgCURwG8LoUBHXtnltu0ziaOZNU7qmoSYwhHjRJu9WpiCAIpIJooVN5CVowFOoSRBBRRNdu0Tnq0Mmi5VIX+x7MUGkz4MCPmXnvP9+8hdcgdXVoKA/cCHQSZZIft0IZcrAOxXoD7FASnjNwJFkciWXTkP1twDs8bzBxF33uaE7RSX+YWdee0FeDBORhDFpEFtbdjr8+wqeis+vK6Y+1CX01xIBZcBEOHz+i1Joe8HFFS1mPA0PJAGmX8icgzGfcKh1zq9TSTxpj9yWmEv8plg9ICwtmhQrQMAFnUICo3CLmYQPmrHbfoUrPlH2hxDLm/oWpvGNEzySU7Q8ekJpqYkBKGEEYXkAPa7ALjXAC23IjWIRUIJoax7a9WjjPlmOQn9bRtmusyyi29NzI9J6SmmpiwCSoCcbm5BFyr6V6FtR6cwH3Jbzf2Z0RjvRXqwkgLJw7rKfZGbXBvAP73lCCIu1SASzYRWaba4osGtlKTzDuxwiKpF3Kf+cgCRV4g2bYrPcgNcEqlGAFPHL13y0q6Km3J62iAAAAAElFTkSuQmCC" v:shapes="Image_x0020_1" width="16"/>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <img alt="https://static.xx.fbcdn.net/images/emoji.php/v9/fa0/1/16/1f3b7.png" height="16" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB0klEQVR42pVTSyhEURgmG2WjrKyUjWyUwuKee+7cUVZkwUYp2RBhY4mysCDvZ153GGMzXnkNWUwWFIVoHoy58/AYj8wo75qM7u8/5JGZMnPrq3vPud/3/f/3nxMV6WPtE4udY7xyOKCajZhs6lLHOST+2T5CvRO1vC45JW08bPLFFBfv0lKje4KApVcsitj92LK5fb0oKkeDKjdWEh0R2bxjyDnZalacEmXuhX/7ykaUIXIRKaHU5f2lc8dkHtgGhbOg/YMOMdBemgEtJZnQX54Fhnpyd9Cprvvad2tJkkdPXmR0N/eIJaHGcnY8JICpj8J6EwVDA4G9NtGPTgm3q1yqz0AUzxQF/MeHazHBAr2ilwngXMHarwJZEsA+Img+kp8m1fJaQ8A2WwnmbnVVyICwr7fTSQ4YcL5wb+TAu8w5bxY5er7VCK75UrANCQ/oHhtSgLn/FrCPCn6PnqNXc2TBpitg1TD3+h9GcAUKI3+Ch8d1DvDQ1PhWUGxDYsm/oHv8DyM4g5svAYeGwuUMecIsuuRRit88mLrVrf+d72mHRL/bcGp4hV0WfGfBsmkk/ieQjni1D1Ng55wRXVrCyIDrFeHeMgGxiQgg3hC7iPxwuO/y5zBKzUC5xQAAAABJRU5ErkJggg==" v:shapes="Image_x0020_5" width="16"/>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                 <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Helvetica","sans-serif"; font-size: 10pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-fareast-language: FR; mso-no-proof: yes;'>
+                  <img alt="https://static.xx.fbcdn.net/images/emoji.php/v9/fca/1/16/1f3ba.png" height="16" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB90lEQVQ4y2NgIBNsO3b2yubDp5vI0nxlVVTetoMH/q4/cOIkURou9juaXpls7w9iP1rjNOfVJqv/l5ZHFhFtI9AAoWdrrJ4+Wmlz5vUWq/83Z9l9uDnT9vu1qfYFBDXfnGl/8fEKa9enq63Wv9lq9f/eIpv7IPFLExyNgYZ8wetsIBZ+tMza8ekqq+8gzXfm25wFuuAN0DV1QDnBGzPsfuAOqMkOnkCFj5+sstr+drvV/0fLrX4DDXJ+uMRKFmjI2/uLbJ9fnWq/HKcBDxZbMQMNOA/SfG++zdXHK6wcgK74+GSFtfv1GbbnX6y3/nF/obUyLs38z9dZHXm3w+r//UXWz4Ea3z5aZiUP9I7L681Wv4GBeAboBWZsGoUfL7eqA2r4+mE30M/zbP5cn27H8XytVRHIkOsz7U7fmGl3HuiadGRNhkBcDHTuCaCiv18OWv3/fADo52VWb4A2fboyxT4IaBs3MPSvPV9n/ePyJAd2FFuP9Zn/3tVq9v81MJS/HobgF+ut/gMNLQUq9gGG9Dsg/nVtmv2uu/OtNTCcfW6qxd6mCIP/UzKAgbXc6v+bbWDNv0DeQYpSRnyhrbSmyvT7pHTr/5MzrP/fng82YAdJmQOowWJlhemPCalW/9fVWIAMKCY5h4FccnaKxd7D3eZ/QAFLrD4AhRgmQP6tYfQAAAAASUVORK5CYII=" v:shapes="Image_x0020_6" width="16"/>
+                  <span style='background-position: 0% 0%; color: rgb(29, 33, 41); line-height: 115%; font-family: "Segoe UI Symbol","sans-serif"; font-size: 1pt; background-image: none; background-attachment: scroll; background-repeat: repeat; background-size: auto; background-origin: padding-box; background-clip: border-box; mso-bidi-font-family: "Segoe UI Symbol";'>
+                   ??
+                  </span>
+                 </span>
+                </font>
+               </span>
+              </p>
+              <span class="_47e3 _5mfr" style="margin: 0px 1px; color: rgb(29, 33, 41); text-transform: none; line-height: 0; text-indent: 0px; letter-spacing: normal; font-family: Helvetica, Arial, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; word-spacing: 0px; vertical-align: middle; white-space: normal; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+               <p>
+                <font color="#000000" face="Times New Roman" size="3">
+                </font>
+                <font color="#ffff00" face="Times New Roman" size="3">
+                 <br/>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Calibri" size="3">
+                 Géraldine Vignard
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" face="Times New Roman" size="3">
+                </font>
+                <span class="_7oe" style="width: 0px; font-family: inherit; font-size: 0px; display: inline-block;">
+                 <font color="#ffff00">
+                  ??
+                 </font>
+                </span>
+               </p>
+              </span>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 08/04/2018
+                </u>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Bonjour et encore merci pour le concert de hier soir.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font face="Calibri">
+                 <font color="#ffff00">
+                  Vous vous êtes
+défoncés, vous avez fait une prestation de qualité
+                 </font>
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font color="#ffff00" face="Calibri">
+                 Une ambiance du tonnerre avec une très bonne équipe de
+jeunes
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font color="#ffff00" face="Calibri">
+                 Continuez à divertir
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font color="#ffff00" face="Calibri">
+                 Encore merci et à bientôt
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font face="Calibri">
+                 <font color="#ffff00">
+                  <span style="mso-spacerun: yes;">
+                  </span>
+                  Geneviève
+                 </font>
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <font face="Calibri">
+                 <font color="#ffff00">
+                  <span style="mso-spacerun: yes;">
+                  </span>
+                  Emblavez -
+                  <span style="mso-spacerun: yes;">
+                  </span>
+                  Haute-loire
+                 </font>
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 29/12/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <font color="#ffff00" size="5">
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Quelle Ambiance ! Merci encore et Meilleurs Voeux pour 2017. Cordialement.
+                </font>
+               </p>
+               <p>
+                <font face="Calibri" size="3">
+                 L.Gilardin, ville de Moulins (03)
+                </font>
+               </p>
+               <p>
+                <font face="Calibri" size="3">
+                 <br/>
+                </font>
+               </p>
+              </font>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 30/08/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <font color="#ffff00" size="5">
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Bonjour à tous,
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font face="Calibri">
+                 <font color="#ffff00">
+                  <span style="mso-spacerun: yes;">
+                   <font size="3">
+                   </font>
+                  </span>
+                  <font size="3">
+                   Un grand merci à tous
+les ritmos
+                  </font>
+                 </font>
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Vous avez été exceptionnel
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Vous avez rendu cette journée inoubliable pour tout le monde
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Tous nos amis nous parlent que de vous les étoiles dans les
+yeux
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Vous êtes les meilleurs
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Ne changez pas !!
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <font color="#ffff00" face="Calibri" size="3">
+                 On vous aime
+                </font>
+               </p>
+               <p>
+                <font face="Calibri" size="3">
+                 <br/>
+                </font>
+               </p>
+               <p>
+                <font color="#ffff00" size="3">
+                </font>
+                <span style="mso-spacerun: yes;">
+                 <font color="#ffff00" face="Calibri" size="3">
+                 </font>
+                </span>
+                <font color="#ffff00" face="Calibri" size="3">
+                 Laurence de Tence et Patrick
+                </font>
+               </p>
+              </font>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 17/07/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <table class="mail-content-readonly-table" style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: 1006px; text-transform: none; text-indent: 0px; letter-spacing: normal; font-family: arial, sans-serif; font-size: 12px; font-style: normal; font-weight: normal; word-spacing: 0px; white-space: normal; border-spacing: 0px; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+               <tbody style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;">
+                <tr style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;">
+                 <td style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; vertical-align: top;">
+                  <div class="mail-content-read" id="message" style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: 1006px; min-height: 200px;">
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     bonjour,
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     nous ne connaissions pas VANOSC, or le 1er avril nous sommes venus au concert de NADAU, nous sommes donc revenus ce samedi pour le festival
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     chapeau !  félicitations ! nous avons passé deux belles soirées
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     encore merci, parceque sans votre investissement pour l'organisation, nous n'aurions eu la chance et le plaisir de ces deux soirées en musique que nous n'oublierons pas
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     vous avez une équipe de juniors extraordinaire et exceptionnelle bien encadrée
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     nous avons passé un bon moment avec les saxos Dédé et Albert
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     continuer a donner joie et bonnne humeur
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     cordialement
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Geneviève
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     haute loire
+                    </font>
+                   </p>
+                  </div>
+                 </td>
+                </tr>
+               </tbody>
+              </table>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 16/07/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00">
+                BRAVO et MERCI !
+               </font>
+              </p>
+              <table class="mail-content-readonly-table" style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: 1006px; color: rgb(68, 68, 68); text-transform: none; text-indent: 0px; letter-spacing: normal; font-family: arial, sans-serif; font-size: 12px; font-style: normal; font-weight: normal; word-spacing: 0px; white-space: normal; border-spacing: 0px; orphans: 2; widows: 2; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;">
+               <tbody style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;">
+                <tr style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;">
+                 <td style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; vertical-align: top;">
+                  <div class="mail-content-read" id="message" style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: 1006px; min-height: 200px;">
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Pour une première fiesta de ritmo c'était une réussite!
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     J'étais à Vanosc hier et j'ai A DO RE!
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Dans votre livret vous avez écrit "Nous souhaitons, à travers ce festival, vous faire connaître nos émotions", eh bien le moins qu'on puisse dire c'est que l'objectif a été atteint!
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     D'habitude, habitant Bourg-Argental, je ne traverse le village qu'en vélo et hier soir, pour un peu, j'aurais regretté de ne pas être venue par ce moyen pour pouvoir plus facilement me garer...oui mais ainsi, j'aurais moins profité de la soirée...
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Vraiment, c'était une très belle fête dans une ambiance festive et conviviale.
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Dans ce monde actuel où certains esprits chagrins voudraient obscurcir notre ciel, vous avez prouvé que la bonne humeur et l'entrain ont encore de beaux jours devent eux.
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Pour tout ceci, pour le décor du village en fête, pour l'organisation qui a dû être très lourde, un grand BRAVO! Merci pour toute cette joie procurée et longue vie à votre banda!
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                    </font>
+                   </p>
+                   <p style="margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; width: auto; height: auto; line-height: 1.3em; float: none; display: block;">
+                    <font color="#ffff00">
+                     Huguette Raby
+                    </font>
+                   </p>
+                  </div>
+                 </td>
+                </tr>
+               </tbody>
+              </table>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 18/04/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <span style="mso-ansi-language: FR;">
+                <font color="#ffff00" face="Calibri">
+                 Un grand merci à toute
+léquipe pour votre gentillesse, votre disponibilité et toute la bonne humeur
+que vous mavez
+                 <span style="mso-spacerun: yes;">
+                 </span>
+                 apporté. Vous avez fait
+lunanimité !!!
+                </font>
+               </span>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <span style="mso-ansi-language: FR;">
+                <font color="#ffff00" face="Calibri">
+                 <br/>
+                </font>
+               </span>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <span style="mso-ansi-language: FR;">
+                <font color="#ffff00" face="Calibri">
+                 Eric (St Alban d'Ay, 07)
+                </font>
+               </span>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               Eric
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 07/04/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Le 1er avril, avec mon mari nous étions venu au concert de
+NADAU à VANOSC, nous avons fait connaissance de votre groupe et nous avons été
+enchantés de votre prestation.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+               </font>
+               <font color="#ffff00" face="Calibri">
+                Vous avez un très bon répertoire dommage que vous n'ayez pas
+enregistré un CD au vu de votre répertoire.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+               </font>
+               <font face="Calibri">
+                <font color="#ffff00">
+                 <span style="mso-spacerun: yes;">
+                 </span>
+                 Nous avons passé une
+belle soirée
+                </font>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+               </font>
+               <font color="#ffff00" face="Calibri">
+                Encore merci, le 15 juillet sera une belle journée
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <span style="mso-spacerun: yes;">
+                <font color="#ffff00" face="Calibri">
+                </font>
+               </span>
+               <font color="#ffff00" face="Calibri">
+                Geneviève
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+               </font>
+               <font color="#ffff00" face="Calibri">
+                Emblavez
+                <span style="mso-spacerun: yes;">
+                </span>
+                Haute-Loire
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 03/04/2017
+                </u>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Magnifique soirée que vous nous avez fait vivre samedi soir
+à Vanosc d'une part en faisant venir NADAU, d'autres parts par votre talent.
+Des rythmes endiablés, des musiques que lon na pas l'habitude d'entendre par
+une troupe comme la vôtre. Quelle énergie, quel enthousiasme! Toutes les
+générations composent votre équipe; vous avez su intéresser et passionner les
+jeunes et maintenir les moins jeunes dans cet élan. Si toutes les formations
+étaient aussi dynamiques que la vôtre, l'avenir des musiques locales seraient
+assuré dans nos campagnes. Encore bravo, continuez et ne changez rien.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <span style="mso-spacerun: yes;">
+                <font color="#ffff00" face="Calibri">
+                </font>
+               </span>
+               <font color="#ffff00" face="Calibri">
+                Jean-Claude
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 13/12/2016
+                </u>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Merci à tous les musiciens et accompagnateurs de la Ritmo
+Fiesta.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Vous êtes formidables, mes invités étaient ravis.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Avec vous tous ; l'amitié, le partage sont importants.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Encore un
+                <span style="mso-spacerun: yes;">
+                </span>
+                GRAND
+MERCI.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Je n'oublierai pas ce que vous avez fait pour moi.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                Bises à tous et à bientôt.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <br/>
+               </font>
+               <font color="#ffff00" face="Calibri">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <em>
+                 Sabine (St Clair, 07)
+                </em>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 06/12/2016
+                </u>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00" size="5">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Mille mercis à vous tous qui ont fait que cette soirée d'anniversaires fût tout simplement exceptionnelle, merveilleuse, formidable.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Merci de l'avoir partagé avec toute la famille.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Cela restera une soirée mémorable que vous nous avez offert, avec votre simplicité, votre gentillesse et votre talent musical.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                Nos invités ont vraiment bien appréciés vos prestations et surtout votre participation avec une ambiance festive, chaleureuse et communicative.
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <em>
+                 Maurice et Christiane de Lalouvesc (07)
+                </em>
+               </font>
+              </p>
+              <p>
+               <u>
+                <font color="#ffff00">
+                 <br/>
+                </font>
+               </u>
+              </p>
+              <p>
+               <u>
+                <font color="#ffff00">
+                 <br/>
+                </font>
+               </u>
+              </p>
+              <p>
+               <br/>
+              </p>
+              <p>
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <font color="#ffff00">
+               <p>
+                <u>
+                 <font size="5">
+                  Posté le 19/09/2016
+                 </font>
+                </u>
+                <br/>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <br/>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 <br/>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Calibri">
+                 Ce petit mot pour vous dire un grand merci, nous avons passé
+un moment formidable ce dimanche à la salle Rochegude de Tain. Bravo à tous. Vous
+faites envie de chanter, danser, merci encore et chapeau bas pour votre talent
+tous âges confondus.
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font face="Calibri">
+                 <br/>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font face="Calibri">
+                 <em>
+                  Véronique.P
+                 </em>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 <br/>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <br/>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <br/>
+               </p>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" size="5">
+                <u>
+                 Posté le 10/08/2016
+                </u>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00">
+                Une mention particulière à Ritmofiesta de Vanosc qui a su mettre le feu à Prapérier.
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00">
+                <em>
+                 Comité des fêtes de St Romain d'Ay (07)
+                </em>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00">
+               </font>
+               <font color="#ffff00">
+               </font>
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <br/>
+              </p>
+              <font color="#ffff00" face="Calibri">
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman" size="5">
+                 <u>
+                  Posté le 19/07/2016
+                 </u>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <u>
+                 <font face="Times New Roman" size="5">
+                  <br/>
+                 </font>
+                </u>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 Merci à tous tes musiciens qui ont été supers! Vous êtes
+fort pour mettre de l'ambiance, cela me fait rêver, c'est tout simplement
+génial!
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 Alors encore merci pour cette soirée mémorable et
+inoubliable. Que de bons souvenirs!!!
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                 <br/>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 <em>
+                  Yvette Boileau
+                 </em>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00">
+                 <em>
+                  DLyre de Cour-Cheverny/Cheverny (41)
+                 </em>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                 <br/>
+                </font>
+               </p>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <br/>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri" size="5">
+                <u>
+                 Posté le 18/05/2016
+                </u>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <u>
+                <font color="#ffff00" face="Calibri" size="5">
+                 <br/>
+                </font>
+               </u>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <em>
+                <font color="#ffff00" face="Calibri">
+                 Un très grand Merci à tous les musiciens de Ritmofiesta pour
+leur
+                </font>
+                <font color="#ffff00" face="Calibri">
+                 prestation et leur enthousiasme communicatif lors de leur
+deuxième
+                </font>
+                <font color="#ffff00" face="Calibri">
+                 participation au corso de la vogue de Beauzac que nous avons
+organisé !
+                </font>
+               </em>
+              </p>
+              <em>
+               <font color="#ffff00">
+               </font>
+               <font color="#ffff00">
+               </font>
+              </em>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <em>
+                 A votre prochaine participation !!!!!ne changez rien !
+                </em>
+               </font>
+              </p>
+              <font color="#ffff00">
+               <em>
+               </em>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <em>
+                </em>
+               </font>
+              </p>
+              <font color="#ffff00">
+               <em>
+               </em>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <em>
+                 Jean-Pierre MONCHER
+                </em>
+               </font>
+              </p>
+              <font color="#ffff00">
+               <em>
+               </em>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00" face="Calibri">
+                <em>
+                 Président du comité des fêtes de Beauzac (43)
+                </em>
+               </font>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <em>
+                <font color="#ffff00" face="Calibri">
+                 <br/>
+                </font>
+               </em>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <em>
+                <font color="#ffff00" face="Calibri">
+                 <br/>
+                </font>
+               </em>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <em>
+                <font color="#ffff00" face="Calibri" size="5">
+                 <u>
+                  Posté le 16/05/2015
+                 </u>
+                </font>
+               </em>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <font color="#ffff00">
+                <br/>
+               </font>
+              </p>
+              <font color="#ffff00" face="Calibri">
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                </font>
+                <font color="#ffff00">
+                 Salut les Ritmofiesta
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                </font>
+                <font color="#ffff00">
+                 J'espère que le retour dans le pays s'est bien passé.
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                </font>
+                <font color="#ffff00">
+                 Que de bons souvenirs avec vous, merci beaucoup de votre
+présence, de votre bonne humeur, de vos sourires et surtout de cette passion
+que vous dégagez lors de vos prestations.
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                </font>
+                <font color="#ffff00">
+                 Je vous envoie mes salutations les plus amicales.
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <br/>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                </font>
+                <font color="#ffff00">
+                 <em>
+                  Maria Gapany
+                 </em>
+                </font>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <em>
+                 <font color="#ffff00" face="Times New Roman">
+                 </font>
+                 <font color="#ffff00">
+                  Commissaire de "Guggen"
+                 </font>
+                </em>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <em>
+                 <font color="#ffff00" face="Times New Roman">
+                 </font>
+                 <font color="#ffff00">
+                  Carnaval de Broc,
+                  <span style="mso-spacerun: yes;">
+                  </span>
+                  Suisse
+                 </font>
+                </em>
+               </p>
+               <p style="margin: 0cm 0cm 10pt;">
+                <font color="#ffff00" face="Times New Roman">
+                 <br/>
+                </font>
+               </p>
+              </font>
+              <p style="margin: 0cm 0cm 10pt;">
+               <br/>
+              </p>
+              <p style="margin: 0cm 0cm 10pt;">
+               <em>
+                <u>
+                 <font color="#ffff00" face="Calibri">
+                  <br/>
+                 </font>
+                </u>
+               </em>
+              </p>
+             </p>
+            </p>
+           </p>
+          </p>
+         </p>
+        </p>
+       </td>
+      </tr>
+     </table>
+    </div>
+   </div>
+   <div id="obj_37" style="position:absolute; left:0px; top:264px; width:150px; height:197px; z-index:2; overflow:visible;">
+    <script src="config_menu_164.js" type="text/javascript">
+    </script>
+   </div>
+   <div id="obj_61" style="position:absolute; left:5px; top:61px; width:147px; height:201px; z-index:28">
+    <img border="0" height="201" src="image_154.jpg" width="147"/>
+   </div>
+   <div id="obj_65" style="position:absolute; left:21px; top:550px; width:107px; height:27px; z-index:29; overflow:visible;">
+    <!-- MoOsTiK v3 1269373360 -->
+    <script src="http://m3.moostik.net/js/?pseudo=ritmo&amp;police=cedric&amp;option=link&amp;lng=fr&amp;width=6" type="text/javascript">
+    </script>
+    <noscript>
+     <a href="http://ritmo.statistik.moostik.net/">
+      <img alt="[]" border="0" src="http://m3.moostik.net/img/?pseudo=ritmo&amp;police=cedric&amp;option=link&amp;lng=fr&amp;width=6"/>
+     </a>
+    </noscript>
+    <!-- KiTsOoM -->
+   </div>
+  </div>
+  <script language="javascript" type="text/javascript">
+   //Calcul de la hauteur du div top pour la gestion de l'affichage du Footer
+//TopHeight();
+initialise_traduction();
+  </script>
+ </body>
+</html>
